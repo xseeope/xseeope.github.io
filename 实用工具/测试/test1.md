@@ -1,0 +1,1 @@
+$\dfrac{1}{n_t + 1},\dfrac{2}{n_t + 1},\cdots,\dfrac{n_t}{n_t + 1}$

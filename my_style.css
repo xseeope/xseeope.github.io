@@ -1,0 +1,579 @@
+/* LM Roman 10 */
+@font-face {
+    font-family: 'LM Roman 10';
+    font-style: normal;
+    font-weight: normal;
+    src: url('./latex_fonts/lmroman10-regular.otf');
+  }
+  
+  @font-face {
+    font-family: 'LM Roman 10';
+    font-style: italic;
+    font-weight: normal;
+    src: url('./latex_fonts/lmroman10-italic.otf');
+  }
+  
+  @font-face {
+    font-family: 'LM Roman 10';
+    font-style: normal;
+    font-weight: bold;
+    src: url('./latex_fonts/lmroman10-bold.otf');
+  }
+  
+  @font-face {
+    font-family: 'LM Roman 10';
+    font-style: italic;
+    font-weight: bold;
+    src: url('./latex_fonts/lmroman10-bolditalic.otf');
+  }
+  
+  /* LM Mono 10 */
+  @font-face {
+    font-family: 'LM Mono 10';
+    font-style: normal;
+    font-weight: normal;
+    src: url('./latex_fonts/lmmono10-regular.otf');
+  }
+  
+  @font-face {
+    font-family: 'LM Mono 10';
+    font-style: italic ;
+    font-weight: normal;
+    src: url('./latex_fonts/lmmono10-italic.otf');
+  }
+  
+  /* 思源宋体 */ 
+  @font-face {
+    font-family: 'Source Han Serif SC';
+    font-style: normal;
+    font-weight: normal;
+    src: url('./latex_fonts/SourceHanSerifSC-Regular.otf');
+  }
+  
+  @font-face {
+    font-family: 'Source Han Serif SC';
+    font-style: normal;
+    font-weight: bold;
+    src: url('./latex_fonts/SourceHanSerifSC-Bold.otf');
+  }
+  
+  @font-face {
+    font-family: 'SimSum-ExtB';
+    src: url("./latex_fonts/simsun.ttc");
+  }
+  
+  /* rem 的根据 
+  :root {
+    font-size: 22px;
+  }*/
+
+  h1,
+  /*
+  设置二级标题样式
+  */
+  h2{
+    font-size: 35px !important;
+    font-family: 'LM Roman 10', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+  }
+  h3{
+    font-size: 29px !important;
+    font-family: 'LM Roman 10', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+  }
+  h4{
+    font-size: 24px !important;
+    font-family: 'LM Roman 10', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+  }
+  h5,
+  h6,
+  pre,
+  p,
+  li {
+    font-family: 'LM Roman 10', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+  }
+  
+  code {
+    font-family: 'LM Mono 10', 'LM Roman 10', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+  }
+  
+  strong {
+    font-weight: bolder;
+  }
+  
+  /* 标题的 font-size 本身就是以 rem 的形式写的，所以只修改这两个。 */
+  p,
+  li {
+    font-size: 1.2rem !important;
+  }
+
+  /* 默认一级列表中的文字会加上一层 p，而 p 会有 margin-block-end，
+  导致一级列表与二级列表之间距离过大。 */
+  .markdown-section li p {
+    margin-block-end: 0;
+  }
+
+  .katex {
+    font-size: 1.1em;
+  }
+  
+  .centertable {
+    width: auto;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* 设置高亮颜色 */
+  mark {
+    background-color: #f8aba6;
+  }
+  
+  /* 
+  加粗(适用于 **** 和 <strong></strong>) 
+  */
+  .markdown-section strong {
+    color: #26221f;
+  }
+
+
+  /* flexible-alert */
+  .alert.flat.note {
+    background-color: #b0d9df !important;
+    border-color: #b0d9df !important;
+  }
+  
+  .alert.flat.tip {
+    background-color: #cbddc8 !important;
+    border-color: #cbddc8 !important;
+  }
+  
+  .alert.flat.warning {
+    background-color: #ffbdaa !important;
+    border-color: #ffbdaa !important;
+  }
+  
+  .alert.flat.attention {
+    background-color: #ffbdaa !important;
+    border-color: #ffbdaa !important;
+  }
+
+
+  /*去掉外边框*/
+  details summary{
+    outline:none;
+    cursor:pointer;/*鼠标放上去之后变成手型*/
+  }
+
+  /*去掉前面默认的小黑三角*/
+  details summary::-webkit-details-marker{
+    display:none; 
+  }
+
+  details {
+    font: 16px "Open Sans", "Arial", sans-serif;
+    width: 750px;
+  }
+  
+  details > summary {
+    animation: animated-border 1.5s infinite;
+    font-family: Arial;
+    font-size: 19px;
+    line-height: 9px;
+    font-weight: bold;
+    color: rgb(7, 191, 228);
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 15px;
+    width: 13em;
+  }
+  
+  .details1 > summary {
+    animation: animated-border 1.5s infinite;
+    font-family: Arial;
+    font-size: 19px;
+    line-height: 30px;
+    font-weight: bold;
+    color: rgb(99, 227, 231);
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 15px;
+    width: 13em;
+  }
+
+  .details2 > summary {
+    animation: animated-border 1.5s infinite;
+    font-family: Arial;
+    font-size: 19px;
+    line-height: 5px;
+    font-weight: bold;
+    color: rgba(235, 145, 28, 0.989);
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 15px;
+    width: 6em;
+  }
+
+  .details3 {
+    font: 16px "Open Sans", "Arial", sans-serif;
+    width: 750px;
+  }
+  .details3 > summary {
+    animation: animated-border 1.5s infinite;
+    font-family: Arial;
+    font-size: 17px;
+    line-height: 20px;
+    font-weight: bold;
+    color: rgb(30, 189, 35);
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 19px;
+    width: 9em;
+  }
+
+  .details4 {
+    font: 16px "Open Sans", "Arial", sans-serif;
+    width: 860px;
+  }
+  .details4 > summary {
+    animation: animated-border 1.5s infinite;
+    font-family: Arial;
+    font-size: 17px;
+    line-height: 20px;
+    font-weight: bold;
+    color: rgb(7, 191, 228);
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 19px;
+    width: 9em;
+  }
+
+  #p1 {
+    line-height: 1.7em;
+    font-family: Arial;
+    background:#d2ebee;
+  }
+  
+  /*
+  hr {
+    size: 5;
+    width: "90%";
+    height: 3px;
+    background-color: rgb(231, 178, 99);
+  }
+  */
+
+  hr.style-one {/*透明渐变水平线*/
+    width:80%;
+    margin:0 auto;
+    border: 0;
+    height: 4px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+   }
+   hr {/*渐变*/
+    align-items:stretch;
+    width:90%;
+    margin:10px 0;
+    border: 0;
+    height: 2.5px;
+    background: #333;
+    background-image: linear-gradient(to right, red, #5baaf4, rgb(9, 206, 91));
+   }
+   hr.style3 {
+    width:80%;
+    color: #000000;
+    background-color: #000000;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #000000;
+    height: 1px;
+    margin: 10px 0;
+    padding: 0;
+  }
+  
+  /*
+  details > p {
+    border-radius: 0 0 10px 10px;
+    background-color: #ddd;
+    padding: 2px 6px;
+    width: 35em;
+    margin: 0;
+    box-shadow: 3px 3px 4px rgba(91, 221, 51, 0.697);
+  }
+  */
+
+  .div1 {
+    width: 600px;
+    height: 200px;
+    position: relative;
+    border: 1px solid #0b7ffe;
+  }
+
+  .div1::before,
+  .div1::after {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      animation: div1Ani 1500ms infinite linear;
+  }
+
+  .div1::before {
+      top: -5px;
+      left: -5px;
+      border-top: 1px solid #0b7ffe;
+      border-left: 1px solid #0b7ffe;
+  }
+
+  .div1::after {
+      right: -5px;
+      bottom: -5px;
+      border-bottom: 1px solid #0b7ffe;
+      border-right: 1px solid #0b7ffe;
+  }
+
+  @keyframes div1Ani {
+      0% {
+          width: 30px;
+          height: 30px;
+      }
+      50% {
+          width: calc(100% + 9px);
+          height: calc(100% + 9px);
+      }
+      100% {
+          width: 30px;
+          height: 30px;
+      }
+  }
+
+  .table1 {
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #ecec63;
+    font-size: 19px;
+  }
+  #table.center1 {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /*设置表头*/
+  th {
+    background-color: #f3f3ef;
+    color: rgb(108, 200, 240);
+    font-weight: bold;
+  }
+  #th1 {
+    background-color: #f3f3ef;
+    color: rgb(108, 200, 240);
+    text-align: right;
+    font-weight: bold;
+    border-top:#000001 2px solid;
+    border-bottom:#000001 2px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+  }
+  #th1l {
+    background-color: #f3f3ef;
+    color: rgb(108, 200, 240);
+    text-align: left;
+    font-weight: bold;
+    border-top:#000001 2px solid;
+    border-bottom:#000001 2px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+  }
+  #th1c {
+    background-color: #f3f3ef;
+    color: rgb(108, 200, 240);
+    text-align: center;
+    font-weight: bold;
+    border-top:#000001 2px solid;
+    border-bottom:#000001 2px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+  }
+  #th2c {
+    background-color: #f3f3ef;
+    color: #000001;
+    text-align: center;
+    font-weight: bold;
+    border-top:#000001 2px solid;
+    border-bottom:#000001 2px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+  }
+
+  .td {
+    padding: 8px;
+    border: 1px solid rgb(53, 88, 211);
+    text-align: left;
+    background-color: #f3f3ef;
+    border-bottom:#f3f3ef 1px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+    border-top:#f3f3ef 1px solid;
+  }
+
+  /*中间表格*/
+  /*默认向右对齐*/
+  #td1 {
+    padding: 8px;
+    border: 1px solid #f3f3ef;
+    text-align: right;
+    background-color: #f3f3ef;
+  }
+  #td1l {
+    padding: 8px;
+    border: 1px solid #f3f3ef;
+    text-align: left;
+    background-color: #f3f3ef;
+  }
+  #td1c {
+    padding: 8px;
+    border: 1px solid #f3f3ef;
+    text-align: center;
+    background-color: #f3f3ef;
+  }
+  #td11 {
+    padding: 8px;
+    border: 1px solid #f3f3ef;
+    color: blue;
+    text-align: left;
+    background-color: #f3f3ef;
+  }
+  #td1c_r_solid {
+    padding: 8px;
+    text-align: center;
+    background-color: #f3f3ef;
+    border-top:#f3f3ef 1px solid;
+    border-bottom:#f3f3ef 1px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#000001 2px solid;
+  }
+
+  /*第一行*/
+  /*默认居中*/
+  #td2 {
+    padding: 8px;
+    background-color: #f3f3ef;
+    border-top:#000001 2px solid;
+    border-bottom:#f3f3ef 1px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+  }
+  #td2l {
+    padding: 8px;
+    text-align: left;
+    background-color: #f3f3ef;
+    border-top:#000001 2px solid;
+    border-bottom:#f3f3ef 1px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+  }
+  #td2r {
+    padding: 8px;
+    text-align: right;
+    background-color: #f3f3ef;
+    border-top:#000001 2px solid;
+    border-bottom:#f3f3ef 1px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+  }
+
+  /*最后一行*/
+  /*默认向右对齐*/
+  #td3 {
+    padding: 8px;
+    text-align: right;
+    background-color: #f3f3ef;
+    border-bottom:#000000 2px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+    border-top:#f3f3ef 1px solid;
+  }
+  #td3l {
+    padding: 8px;
+    text-align: left;
+    background-color: #f3f3ef;
+    border-bottom:#000000 2px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+    border-top:#f3f3ef 1px solid;
+  }
+  #td3c {
+    padding: 8px;
+    text-align: center;
+    background-color: #f3f3ef;
+    border-bottom:#000000 2px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+    border-top:#f3f3ef 1px solid;
+  }
+  #td3c_r_solid {
+    padding: 8px;
+    text-align: center;
+    background-color: #f3f3ef;
+    border-top:#f3f3ef 1px solid;
+    border-bottom:#000000 2px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#000001 2px solid;
+  }
+
+  /*设置标题*/
+  caption {
+    padding: 8px;
+    text-align: center;
+    background-color: #f3f3ef;
+    border-top:#000001 2px solid;
+    border-bottom:#f3f3ef 1px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+  }
+
+  .caption1 {
+    padding: 8px;
+    text-align: center;
+    background-color: #f3f3ef;
+    border-top:#000001 2px solid;
+    border-bottom:#000001 2px solid;
+    border-left:#f3f3ef 1px solid;
+    border-right:#f3f3ef 1px solid;
+  }
+
+  #tr1 {
+    background-color: #f3f3ef;
+  }
+
+
+
+  .table-wrapper {
+    width: 100%;
+    height: 200px;
+    overflow-y: scroll;
+  }
+
+  .fixed-row {
+    position: sticky;
+    top: 0;
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+
+
+
+
+
+  
+
+  
+  
+  
+  
+    
+  
+
+
+
+
+ 
