@@ -79,7 +79,7 @@ $$
 
 一般情况下 $0<p_i<1$ ，此时单词的频率为positive和negative topic的convex combination。举例：词语“up”在一个极端积极的新闻中出现的频率期望为0.8，在一个极端消极的新闻中出现的频率期望为0.1，则其在一篇sentiment score为0.6的文章中出现的期望频率为 $0.6\times0.8+(1-0.6)\times0.1=0.52$ 。
 
-![Figure1](/papers/SESTM/figures/Figure1.png)
+![Figure1](figures/Figure1.png)
 
 这个模型的关键在于估计 $O_+$，$O_-$ ，$p_i$。具体来说，SESTM有三个步骤：
 
@@ -107,7 +107,7 @@ $$
 $$
 上面过程可以总结为Algorithm 1：
 
-![算法1.png](/papers/SESTM/figures/算法1.png)
+![算法1.png](figures/算法1.png)
 
 ## Learning Sentiment Topics
 
