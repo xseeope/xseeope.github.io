@@ -155,3 +155,38 @@ Algorithm 3：
 
 ![算法3](/figures/算法3.png)
 
+## Empirical Analysis
+
+### Data and Pre-processing
+
+Text data:
+
+- 来源：*Dow Jones Newswires Machine Text Feed and Archive* database
+- 时间：January 1, 1989 to July 31, 2017
+- 数量：22,471,222
+- 去除包含多个stock tag的新闻（大约62.5%）
+
+![Figure3](/figures/Figure3.png)
+
+![table1](/figures/table1.png)
+
+由于事先不知道新闻稿中的潜在新信息何时被纳入价格中。如果价格调整缓慢，那么将文章与同时期回报以及未来回报对齐是有道理的。新闻稿对于市场参与者来说是一个非常显眼的信息来源，因此价格反应的任何延迟可能是短暂的。或者，新闻稿可能是最近透露信息的重新表述，这种情况下，将新闻与先前的回报对齐可能更为合适。作者最终选择将t时刻的文本数据与t-1到t+1时刻的收益数据做match。
+
+作者按照自然语言处理文献中的常见步骤来清理和结构化新闻文章。第一步是归一化，包括1）将文章中的所有单词更改为小写字母；2）扩展缩写，如将“haven't”扩展为“have not”；以及3）删除数字、标点符号、特殊符号和非英语单词。第二步是词干提取和词形还原，将一个词的不同形式分组在一起，以分析它们作为一个根词，例如，“disappointment”变为“disappoint”，“likes”变为“like”等。第三步则是将每篇文章分割成一个一个单词。第四步删除常见的停用词，如“and”、“the”、“is”和“are”。
+
+### Daily Predictions
+
+![table2](/figures/table2.png)
+
+![Figure5](/Users/zhujiyuan/Documents/GitHub/xseeope.github.io/papers/SESTM/figures/Figure5.png)
+
+作者的交易策略比较直接：每天买入情感得分最高的50只股票，并卖空情感得分最低的50只股票。策略的多空头构建考虑了等权重和市值加权两种方案。
+
+等权多空组合年化夏普比率为4.29，而市值加权情况下为1.33。这表明，sentiment对未来小盘股回报的预测能力更强。同时交易中的多头表现优于空头，夏普比率为2.12对比1.21（等权多空）。同时以Fama-French作为benchmark时，几乎所有的收益来源都来自于 $\alpha$ 。
+
+### Most Impactful Words
+
+![Figure6](/figures/Figure6.png)
+
+### Speed of Information Assimilation
+
