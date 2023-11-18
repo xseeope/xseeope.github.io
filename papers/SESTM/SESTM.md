@@ -75,7 +75,7 @@ $$
 $$
 d_{i,[S]}\sim Multinomial(s_i,\;p_iO_++(1-p_i)O_-)
 $$
-其中 $s_i$ 表示在文章 $i$ 中情感词sentiment-charged words的个数， $s_i$ 决定了该多项式分布的scale。$O_+$ 是单词的概率分布，其形式为长度为 $|S|$ ，$l^1$ 范数为1，所有元素非负的向量。$O_+$ 描述了在一个极端积极（$p_i=1$）时词语的期望频率。$O_-$ 同理。$O_+$ 被称为positive sentiment topic，$O_-$ 被称为negative sentiment topic。
+其中 $s_i$ 表示在文章 $i$ 中情感词sentiment-charged words的个数， $s_i$ 决定了该多项式分布的scale。$O_+$ 是单词的概率分布，其形式为长度为 $|S|$ ，$l^1$ 范数为1，并且所有元素非负的向量。$O_+$ 描述了在一个极端积极（$p_i=1$）时词语的期望频率。$O_-$ 同理。$O_+$ 被称为positive sentiment topic，$O_-$ 被称为negative sentiment topic。
 
 一般情况下 $0<p_i<1$ ，此时单词的频率为positive和negative topic的convex combination。举例：词语“up”在一个极端积极的新闻中出现的频率期望为0.8，在一个极端消极的新闻中出现的频率期望为0.1，则其在一篇sentiment score为0.6的文章中出现的期望频率为 $0.6\times0.8+(1-0.6)\times0.1=0.52$ 。
 
@@ -87,7 +87,7 @@ $$
 - 估计 $O_+$，$O_-$ 
 - 预测一片新文章的sentiment score $p_i$
 
-## Screening for Sentiment-Charged Words
+### Screening for Sentiment-Charged Words
 
 Sentiment-neutral words很坏，因为它们的维度很高且在文中的占比很大，因此需要剔除它们，分离出sentiment-charged words。
 
@@ -107,12 +107,51 @@ $$
 $$
 上面过程可以总结为Algorithm 1：
 
-![算法1.png](figures/算法1.png)
+![算法1](figures/算法1.png)
 
-## Learning Sentiment Topics
+### Learning Sentiment Topics
 
 把两个topic vector合并为一个矩阵 $ O=[O_+,O_-]$ 。定义 $vactor \;of\;frequency,F$ 与 $ vector\;of\;tone, T$：
 $$
 F=\frac{1}{2}(O_++O_-),\qquad T=\frac{1}{2}(O_+-O_-)
 $$
-如果一个词语在 $F$ 的值比较大，说明其在总体水平上出现频率很高；如果其 $T$ 值较高，则说明其情感色彩更为积极。
+如果一个词语在 $F$ 的值比较大，说明其在总体水平上出现频率很高；如果其 $T$ 值较高，则说明其情感色彩更为积极。设定 $\tilde{d_{i,[S]}} = d_{i,[S]}/s_i$ ，为词频率向量，根据之前设定的模型则有：
+$$
+\mathbb{E}\tilde{d_{i,[S]}}=\mathbb{E}\frac{d_{i,[S]}}{s_i}=p_iO_++(1-p_i)O_-
+$$
+或者写成矩阵形式：
+$$
+\mathbb{E}\tilde{D'}=OW,\quad 
+W=\begin{bmatrix} p_1 & \cdots & p_n \\ (1-p_1) & \cdots &(1-p_n)\end{bmatrix},\quad
+and\quad \tilde{D'}=[\tilde{d_1},\dots,\tilde{dn}]'
+$$
+别忘了我们在这一部分是要估计 $O$ ，那么要怎么估计呢，作者使用了一个简单的方法，就是通过 $\tilde{D}$ 对 $W$ 的回归来估计 $O$。那么问题又来了，$\tilde{D}$ 和 $W$ 是从哪来的呢？$\tilde{D}$ 实际上就是用算法1中得到的 $\hat{S}$ 算出来的。而对于 $W$ 作者则使用标准化的收益排名作为训练样本的sentiment score：
+$$
+\hat{p_i}=\frac{rank\;of\;y_i\;in\; \{y_l \}_{l=1}^n}{n}
+$$
+对于 $O$ 的估计总结为algorithm 2：
+
+![算法2](figures/算法2.png)
+
+作者在附录中指出，该方法对于 $F$ 的估计是一致的，但是对于 $T$ 的估计存在偏误，这个偏误与true sentiment和estimated sentiment之间的correlation有关，其形式为：
+$$
+\rho = \frac{12}{n}\sum_{i=1}^n(p_i-\frac{1}{2})(\hat{p_i}-\frac{1}{2})
+$$
+Theorem C.3还指出 $\hat{T}$ 会收敛到 $\rho T$ 。因此对 $\hat{\rho}$ 的估计越准确，偏误就越低。但是这种的偏误对实际应用没有影响，因为在实践中，我们感兴趣的是词之间的相对情绪relative sentiment，而不是绝对情绪absolute sentiment。在我们只关注relative sentiment的情形下，$\rho$ 的影响会被完全消除。
+
+考虑 $n$ 篇文章，词汇表size为 $|S|$，也就是说 $S$ 中单词的数量，以及平均文章长度 $\bar{s}$ ，对于 $F, S$ 的估计误差的收敛速率为$\sqrt{|S|/(n\bar{s})}$。在实证中，一个sentiment dictionary大约包含100到200个单词，然而它们在一篇文章中的总数通常不超过20。考虑到这样的收敛速率的形式，作者主要关注的对象为“短文章”也就是 $\bar{s}/|S|$ 的值比较小的情况。作者宣称其使用有监督学习主要也是考虑到收敛速度。
+
+### Scoring New Articlas
+
+通过前面两步，我们已经得到了 $\hat{S},\hat{O}$，现在我们要用它们来估计样本外的文章 $i$ 的sentiment score了。回忆一下之前的模型：
+$$
+d_{i,[S]}\sim Multinomial(s_i,\;p_iO_++(1-p_i)O_-)
+$$
+其中 $d_i$是这篇文章的count vector，$s_i$ 是这篇文章的所有sentiment-charged words。我们可以用极大似然估计来估计 $p_i$。
+
+作者在似然函数中增加了一个惩罚项 $\lambda log(p_i(1-p_i))$，惩罚的作用是帮助应对有限的观测数量和与股票回报预测本身的低信噪比。且大多数的文章其实是中性的neutral- sentiment，而加入的惩罚项会导致估计量朝着1/2收缩，使得模型更符合现实情况。且作者在实际研究中也发现不加惩罚项会使得 $\hat{p_i}$ 收敛至 $\frac{1}{2}+\frac{1}{\rho}(p_i-\frac{1}{2})$， 加入了惩罚项可以deflate偏误。
+
+Algorithm 3：
+
+![算法3](/figures/算法3.png)
+
