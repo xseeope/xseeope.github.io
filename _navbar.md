@@ -2,6 +2,6 @@
 
 
 
-* 友情链接
+* Related Links
   * [SUSTech](https://www.sustech.edu.cn/)
   * [Docsify](https://docsify.js.org/#/)
