@@ -13,7 +13,7 @@
 
 ### Step1
 
-对单个股票的时间序列做如下回归，得到个股收益率在因子上的暴露$\beta_i$ 
+对单个股票的时间序列做如下回归，得到个股收益率在因子上的暴露$\beta_i$ d s s s s s s s s s s s
 $$
 R_{it}=\alpha_i+\beta_i'f_t+\varepsilon_{it}
 $$
