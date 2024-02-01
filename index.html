@@ -11,21 +11,32 @@
     <!-- 设置浏览器图标 -->
     <link rel="icon" href="/myicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="/myicon.ico" type="image/x-icon" />
-    <!-- 默认主题 -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
-    <!-- 公式 -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+    <link 
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css"
+    title="docsify-darklight-theme"
+    type="text/css"
+    />
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"/>
+  
+    <!-- Back to top -->
+    <link rel="stylesheet" href="back_to_top.css">
+  
+    <!-- My style -->
+    <link rel="stylesheet" href="my_style.css">
+
 
 </head>
 
-<body>/
+<body>
     <!-- 定义加载时候的动作 -->
     <div id="app">加载中...</div>
     <script>
         window.$docsify = {
-            themeColor: '#003f43',
+            // themeColor: '#003f43',
             // 项目名称
-            name: '🎸🎸🎹🎹🥁🥁🎤🎤🤘🤘',
+            name: 'Notes',
             // 仓库地址，点击右上角的Github章鱼猫头像会跳转到此地址
             repo: 'https://github.com/xseeope',
             // 侧边栏支持，默认加载的是项目根目录下的_sidebar.md文件
@@ -56,24 +67,97 @@
                 depth: 4,
                 hideOtherSidebarContent: true,
                 namespace: 'Docsify-Guide',
-            }
+            },
+
+            darklightTheme: {
+                defaultTheme : 'light',
+                light: {
+                accent: '#003f43',
+                textColor: '#26221f',
+                background:'#ffffff',
+                // coverBackground : 'linear-gradient(to right top, hsl(181 37% 71% / 1) 0%,#6dd5fa33, #efe8e8)',
+                },
+                dark: {
+                accent: '#0086b5',
+                // coverBackground : 'linear-gradient(to left bottom, hsl(181, 100%, 85%) 0%, hsl(0, 100%, 85%) 100%)',
+                }
+            },
+            // Corner
+            repo:'true', // set the docsify show the corner
+            corner: {
+                // the icon link url to another site  
+                url: "https://github.com/xseeope/xseeope.github.io", 
+                // the default preset icon in docsify-corner  
+                icon: "GitHub", 
+            },  
+            // Flexible alerts
+            'flexible-alerts': {
+                style: 'flat',
+                theorem: {
+                label: 'Theorem',
+
+                label:{ 
+                    '/en-GB/': 'Comment',
+                    '/': 'Theorem'},
+
+                icon: 'fa fa-book',
+                className: 'theorem'
+                }
+            },
         }
-    </script>
-    <!-- docsify的js依赖 -->
-    <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-    <!-- emoji表情支持 -->
-    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
-    <!-- 图片放大缩小支持 -->
-    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
-    <!-- 搜索功能支持 -->
-    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-    <!--在所有的代码块上添加一个简单的Click to copy按钮来允许用户从你的文档中轻易地复制代码-->
-    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-    <!-- 公式 -->
-    <script src="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/marked@4"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
-  
+
+</script>
+
+<!-- Docsify v4 -->
+<script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+
+
+<!-- Full text search -->
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+
+ <!-- docsify-latex -->
+ <script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+ <script src="//cdn.jsdelivr.net/npm/docsify-latex@0"></script>
+
+<!-- Dependencies of docsify-katex (must be front of the CDN files) -->
+<!-- <script src="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/marked@4"></script> -->
+
+<!-- CDN files for docsify-katex -->
+<!-- <script src="//cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script> -->
+<!-- or <script src="//cdn.jsdelivr.net/gh/upupming/docsify-katex@latest/dist/docsify-katex.js"></script> -->
+
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/aee8ea8189.js"></script>
+
+<!-- Flexible alerts -->
+<script src="https://unpkg.com/docsify-plugin-flexible-alerts"></script>
+
+<!-- Twitter emoji -->
+<script src="//cdn.jsdelivr.net/gh/TaQini/docsify-twemoji@master/twemoji.min.js"></script>
+
+<!-- pagination -->
+<script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+
+<!-- Zoom image -->
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+
+<!-- Updated time -->
+<script src="https://cdn.jsdelivr.net/npm/docsify-updated@1/src/time-updater.min.js"></script>
+
+<!-- Corner -->
+<script src="//cdn.jsdelivr.net/npm/docsify-corner/dist/docsify-corner.js"></script>
+
+<!-- Back to top -->
+<script src="back_to_top.js"></script>
+
+<!-- Darklight theme -->
+<script
+  src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"
+  type="text/javascript">
+</script>
+
+
 
 </body>
 

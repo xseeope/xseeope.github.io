@@ -1,0 +1,290 @@
+/* LM Roman 10 
+@font-face {
+  font-family: 'LM Roman 10';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./latex_fonts/lmroman10-regular.otf');
+}
+
+@font-face {
+  font-family: 'LM Roman 10';
+  font-style: italic;
+  font-weight: normal;
+  src: url('./latex_fonts/lmroman10-italic.otf');
+}
+
+@font-face {
+  font-family: 'LM Roman 10';
+  font-style: normal;
+  font-weight: bold;
+  src: url('./latex_fonts/lmroman10-bold.otf');
+}
+
+@font-face {
+  font-family: 'LM Roman 10';
+  font-style: italic;
+  font-weight: bold;
+  src: url('./latex_fonts/lmroman10-bolditalic.otf');
+}
+*/
+
+@font-face {
+  font-family: 'Georgia,serif';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./latex_fonts/georgia.ttf');
+}
+
+@font-face {
+  font-family: 'Georgia,serif';
+  font-style: italic;
+  font-weight: normal;
+  src: url('./latex_fonts/georgiai.ttf');
+}
+
+@font-face {
+  font-family: 'Georgia,serif';
+  font-style: normal;
+  font-weight: bold;
+  src: url('./latex_fonts/georgiab.ttf');
+}
+
+@font-face {
+  font-family: 'Georgia,serif';
+  font-style: italic;
+  font-weight: bold;
+  src: url('./latex_fonts/georgiaz.ttf');
+}
+
+/*
+@font-face {
+  font-family: 'Crimson Pro,serif';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./latex_fonts/CrimsonPro-Regular.otf');
+}
+
+@font-face {
+  font-family: 'Crimson Pro,serif';
+  font-style: italic;
+  font-weight: normal;
+  src: url('./latex_fonts/CrimsonPro-italic.otf');
+}
+
+@font-face {
+  font-family: 'Crimson Pro,serif';
+  font-style: normal;
+  font-weight: bold;
+  src: url('./latex_fonts/CrimsonPro-bold.otf');
+}
+
+@font-face {
+  font-family: 'Crimson Pro,serif';
+  font-size: larger;
+  font-style: italic;
+  font-weight: bold;
+  src: url('./latex_fonts/CrimsonPro-bolditalic.otf');
+}
+*/
+
+
+
+/* LM Mono 10 */
+@font-face {
+  font-family: 'LM Mono 10';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./latex_fonts/lmmono10-regular.otf');
+}
+
+@font-face {
+  font-family: 'LM Mono 10';
+  font-style: italic ;
+  font-weight: normal;
+  src: url('./latex_fonts/lmmono10-italic.otf');
+}
+
+/* 思源宋体 */ 
+@font-face {
+  font-family: 'Source Han Serif SC';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./latex_fonts/SourceHanSerifSC-Regular.otf');
+}
+
+@font-face {
+  font-family: 'Source Han Serif SC';
+  font-style: normal;
+  font-weight: bold;
+  src: url('./latex_fonts/SourceHanSerifSC-Bold.otf');
+}
+
+@font-face {
+  font-family: 'SimSum-ExtB';
+  src: url("./latex_fonts/simsun.ttc");
+}
+
+.pagination-item a {
+  color: currentColor;
+  font-family: 'Georgia,serif', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+}
+
+
+
+h1 {
+  font-size: 34px !important;
+  font-family: 'Georgia,serif', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+}
+h2 {
+  font-size: 32px !important;
+  font-family: 'Georgia,serif', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+  background-color: #5ac6df4d;
+}
+h3 {
+  font-size: 27px !important;
+  font-family: 'Georgia,serif', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+  background-color: #90d3e33b;
+}
+h4 {
+  font-size: 25px !important;
+  font-family: 'Georgia,serif', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+}
+
+h5,
+h6,
+pre,
+
+a {
+  font-family: 'Georgia,serif', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+}
+
+code {
+  font-family: 'Georgia,serif', 'LM Roman 10', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+}
+
+p {
+  font-family: 'Georgia,serif', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+  font-size: 23px !important;
+  line-height: 140% !important;
+}
+
+li {
+  font-family: 'Georgia,serif', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+  font-size: 23px !important;
+  line-height: 140% !important;
+}
+
+.markdown-section ol {
+  font-size: 23px !important;
+}
+
+.markdown-section ul {
+  font-size: 23px !important;
+  list-style-type: square;
+}
+
+.markdown-section ul ul {
+  font-size: 23px !important;
+}
+
+.markdown-section ol ol {
+  font-size: 23px !important;
+}
+
+
+.sidebar ul li a {
+  font-size: 20px !important;
+}
+
+.sidebar li {
+  margin: 4px 0;
+  font-size: 22px !important;
+}
+
+
+
+.markdown-section strong {
+  color: #067283 !important ; 
+  font-weight: 1000;
+}
+
+strong {
+  font-weight: bolder;
+}
+
+.markdown-section em {
+  color: #c34520;
+}
+
+.markdown-section figure, .markdown-section p {
+  margin: 1em 0;
+}
+
+.katex {
+  font-size: 26px !important;
+}
+
+.centerwords {
+  font-weight: bolder;
+  color: #067283;
+  font-family: 'Georgia,serif', 'Times New Roman', 'Arial';
+  text-align: center;
+}
+
+.centerwords p {
+  font-size: 30px !important;
+}
+
+section.cover h1 {
+  font-size: 2.125rem !important;
+}
+
+.centertable {
+  width: auto;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Georgia,serif', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
+  font-size: 23px !important;
+}
+
+
+mark {
+  background-color: #f8aba6;
+}
+
+/* flexible-alert */
+.alert.flat.note {
+  background-color: #b0d9df !important;
+  border-color: #b0d9df !important;
+  font-size: 30px !important;
+}
+
+.alert.flat.tip {
+  background-color: #cbddc8 !important;
+  border-color: #cbddc8 !important;
+}
+
+.alert.flat.warning {
+  background-color: #ffbdaa !important;
+  border-color: #ffbdaa !important;
+}
+
+.alert.flat.attention {
+  background-color: #ffbdaa !important;
+  border-color: #ffbdaa !important;
+}
+
+.alert.flat.theorem {
+  background-color: #ae8cc1 !important;
+  border-color: #ae8cc1 !important;
+  font-size: 30px !important;
+}
+
+hr {
+  height:  3px;
+  background-color: rgb(0, 0, 0);
+}
+
+
+
