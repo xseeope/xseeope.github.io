@@ -8,6 +8,9 @@
   * [ECA](/papers/WQL/ECA.md)
   * [DropCov](/papers/WQL/DropCov.md)
   * [UnderstandGCP](/papers/WQL/UnderstandGCP.md)
+* Tools
+  * [PyTorch Autograd](tools/PyTorch_Autograd.md)
+  * [PyTorch data](tools/PyTorch_utils_data.md)
 * Courses
   * [Time Series Analysis: midterm-review](courses/时序期中review.md) <!--注意这里是相对路径-->
   * [Time Series Analysis: Volatility](courses/FTS-Volatility.md)
