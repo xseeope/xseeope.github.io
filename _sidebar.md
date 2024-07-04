@@ -3,6 +3,7 @@
 
 * Papers
   * [Predicting Returns with Text Data](/papers/SESTM/SESTM.md)
+  * [Deep Learning in Asset Pricing](papers/GAN/GAN.md)
   * [Dropout](/papers/WQL/Dropout.md)
   * [DeCov](/papers/WQL/DeCov.md)
   * [ECA](/papers/WQL/ECA.md)
