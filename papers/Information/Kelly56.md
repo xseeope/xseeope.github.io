@@ -52,9 +52,10 @@ $$
 ### Notation
 - $p(s)$ the probability that the transmitted symbol is the $s$'th one.
 - $p(r/s)$ the conditional probability that the received symbol is the $r$'th on the hypothesis that the transmitted symbol is the $s$'th one.
+- $p(s,r)$ the joint probability of the $s$'th transmitted and the $r$'th received symbol.
 - $q(r)$ received symbol probability
 - $q(s/r)$ conditional probability of transmitted symbol on hypothesis of received symbol.
-- $\alpha_s$ the odds paid on the occurrence of the $s$'th transmitted symbol, i.e.,$\alpha_s$ is the number of dollars returned for a one-dollar bet (including that one dollar).
+- $\alpha_s$ the odds paid on the occurrence of the $s$'th transmitted symbol, i.e., $\alpha_s$ is the number of dollars returned for a one-dollar bet (including that one dollar).
 - $a(s/r)$ the fraction of the gambler's captial that he decides to bet on the occurrence of the $s$'th transmitted symbol *after* observing the $r$'th *received* symbol.
 
 ### Case of "fair" odds
@@ -64,3 +65,37 @@ $$
 $$
 \alpha_s = \frac{1}{p(s)}
 $$
+同时设想没有赌场抽水（track take），则有
+$$
+\sum \frac{1}{\alpha_s}=1
+$$
+不失一般性，假设
+$$
+\sum_s a(s/r)=1
+$$
+也就是说不论收到什么信号，赌博者都会投入全部的财富，因为他可以通过取消下注来拿回资金。我们现在有，
+$$
+V_N=\prod_{r,s}[a(s/r)\alpha_s]^{W_{sr}}V_0
+$$
+其中 $W_{sr}$ 表示接受信号 $r$ 后下注信号 $s$ 且获胜的次数。
+$$
+\log \frac{V_N}{V_0}=\sum_{rs}W_{sr}\log \alpha_s a(s/r)
+$$
+并可以得到指数增长率：
+$$
+G=\lim_{N\rightarrow\infty}\frac{1}{N}\log\frac{V_N}{V_0}=\sum_{rs}p(s,r)\log\alpha_sa(s/r)
+$$
+注意到,
+$$
+\alpha_s=\frac{1}{p(s)}
+$$
+则有，
+$$
+G=\sum_{rs}p(s,r)\log\frac{a(s/r)}{p(s)}\\
+G=\sum_{rs}p(s,r)\log a(s/r)+H(X)
+$$
+其中 $H(X)$ 为香农定义的 source rate。上式 $G$ 的第一项可以求解出最大值点：
+$$
+a(s/r) = \frac{p(s,r)}{\sum_k p(k,r)} = \frac{p(s,r)}{q(r)}=q(s/r)
+$$
+则我们可以得到 $G_{max}=H(X)-H(X/Y)$，即为香农定义的 rate of transmission。
