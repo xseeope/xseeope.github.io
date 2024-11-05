@@ -242,6 +242,26 @@ W_{UPSA} &= \bar{\Sigma}(Z)^{-1} \bar{\mu}(Z) \\[10pt]
 W_{CUPSA} &= \arg \max_{W \in \mathcal{S}_{+}^{L}} \left( W' \bar{\mu}(Z) - 0.5 \, W' \bar{\Sigma}(Z) W \right).
 \end{align*}
 $$
+
 ## Empirics
+
+**资产空间：**特征排序的 managed portfolio，$N=153$，（Is There a Replication Crisis in Finance 这篇文章的数据）。时间跨度为 1970-11-30 至 2022-12-31，频率为月频。
+
+**策略：** 使用 rolling window，$T=120\;months$（十年），月度再平衡。
+
+**Benchmarks：** 
+- LW：Ledoit-Wolf，一种非参数化非线性 shrinkage 方法，改方法试图最小化真实与实证的 covariance matrix 之间的距离。
+- Best $z$：基于 LOO 估计出来的最优 Ridge 惩罚项 $$z_*(t - T + 1, t) = \arg \max_{z \in Z} U^{\text{OOS}}_{\text{LOO}}(f_z).$$
+- KNS：只对协方差矩阵的 top-5 PC 做 Ridge shrinkage $$R_{t+1}(f_{KNS}(t - T + 1, t)) = R_{t+1}^{PC}(5, f_{z_*}(t - T + 1, t)).$$
+
+Figure 1 展示了随着 PC 数量的增加，只有 CUPSA 能在饱和后能保持稳定。
 ![fig1](Figure1.png)
+
+作者使用如下方式构建对基于 CUPSA 的策略的 alpha 的检验：
+![alpha](alpha.png)
+
+如 Figure 2 所示，随着 PC 的增加，基于 CUPSA 的策略所带来的 alpha 逐渐显著。
 ![fig2](Figure2.png)
+
+Figure 3 展示了权重 $W$ 随时间与 $z$ 取值的变化谱图。
+![fig3](Figure3.png)
