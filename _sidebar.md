@@ -5,6 +5,7 @@
   * [Predicting Returns with Text Data](/papers/SESTM/SESTM.md)
   * [Deep Learning in Asset Pricing](papers/GAN/GAN.md)
   * [A New Interpretation of Information](papers/Information/Kelly56.md)
+  * [A Mathematical Theory of Communication](/papers/Information/Shannon48.md)
   * [Universal Portfolio Shrinkage](papers/UniversalShrinkage/uni_shrink.md)
   * [Dropout](/papers/WQL/Dropout.md)
   * [DeCov](/papers/WQL/DeCov.md)
