@@ -25,6 +25,40 @@
   
     <!-- My style -->
     <link rel="stylesheet" href="my_style.css">
+    <style>
+        @media print {
+          /* 隐藏导航栏、侧边栏或不需要的内容 */
+          .sidebar, .navbar, .back-to-top, .pagination-container {
+            display: none;
+          }
+      
+          /* 调整正文的宽度和字体 */
+          body {
+            margin: 0;
+            padding: 10px;
+            font-size: 12pt;
+          }
+      
+          /* 调整打印内容的标题样式 */
+          h1, h2, h3 {
+            color: black;
+            margin-top: 1em;
+          }
+      
+          /* 避免超长内容截断，分页样式 */
+          div,p{page-break-inside: avoid;}
+          
+        }
+      </style>
+      <style>
+        img {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      </style>
+      
+      
 
 
 </head>
@@ -34,6 +68,9 @@
     <div id="app">加载中...</div>
     <script>
         window.$docsify = {
+            markdown: {
+              enableHTML:true
+            },
             // themeColor: '#003f43',
             // 项目名称
             name: 'Notes',
