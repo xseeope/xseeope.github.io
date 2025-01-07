@@ -166,3 +166,86 @@ $$
 P_j = \sum_i P_ip_i(j).
 $$
 其展示了在 $N\rightarrow \infty$ 时，经过 $N$ 个符号（symbols）后处于状态 $j$ 的概率，即 $P_j(N)$。
+
+### Choice, Uncertainty and Entropy
+
+先前的工作已经将信息源表示为一个马尔可夫过程，那么要如何定义一个量，使其可以度量某个过程产生信息的速度。
+
+假设我们有一组事件（event）的集合，其出现的概率为 $p_1,p_2,\dots p_n$，且已知。我们想要找到一个 measure，可以度量要出现这个 event 所需要涉及到的“选择”（choice）的量，或者说可以度量我们对结果（outcome）的不确定性有多大。
+
+我们的 measure $H(p_1,p_2,\dots p_n)$ 应该具有如下性质：
+1. $H$ 关于 $p_i$ 连续。
+2. 如果所有的事件出现概率相等即 $p_1=1/n$，则 $H$ 应该是关于 $n$ 的单调递增函数。也就是说在这种情况下当可能出现事件的个数越多时，不确定性也越大，代表这个事件所需要的的选择越多。
+3. 如果一个选择被分解为两个连续的选择，则其总的 $H$ 应等于子选择序列的加权平均和。在 Fig 6 展示的实例中，$H(\frac{1}{2},\frac{1}{3},\frac{1}{6})=H(\frac{1}{2},\frac{1}{2})+\frac{1}{2}H(\frac{2}{3},\frac{1}{3})$。
+
+![Fig6](Shannon48Fig6.png ':size=600')
+
+<em>**Theorem 2:** The only $H$ satisifying the three above assumption is of the form:
+$$
+H=-K\sum^n_{i=1}p_i\log p_i
+$$
+where $K$ is a positive constant.</em>
+
+**Proof of Theorem 2:**
+从所有事件都等可能发生的情形出发，$H(\frac{1}{n},\frac{1}{n},\dots ,\frac{1}{n})=A(n)$，由条件 3 我们可以得到在 $n=s^m$ 的情况下有
+$$
+A(s^m)=mA(s).
+$$
+类似地，可以有
+$$
+A(t^n)=nA(t).
+$$
+我们很容易找到一个 $m$ 满足
+$$
+s^m\leq t^n\leq s^{m+1}.
+$$
+取对数并除以 $n\log s$ 可以得到
+$$
+\frac{m}{n}\leq \frac{\log t}{\log s}\leq \frac{m}{n}+\frac{1}{n}\\
+\;\\
+\left\lvert \frac{m}{n}-\frac{\log t}{\log s} \right\rvert <\epsilon
+$$
+其中 $\epsilon$ 为任意小。现利用 $A(n)$ 的单调性，可以有
+$$
+A(s^m)\leq A(t^n)\leq A(s^{m+1})\\
+\;\\
+mA(s)\leq nA(t) \leq (m+1)A(s).
+$$
+同时除以 $nA(s)$，
+$$
+\frac{m}{n}\leq \frac{A(t)}{A(s)}\leq \frac{m}{n}+\frac{1}{n}\\
+\;\\
+\left\lvert \frac{m}{n}-\frac{A(t)}{A(s)} \right\rvert <\epsilon\\
+\;\\
+\left\lvert \frac{A(t)}{A(s)}-\frac{\log t}{\log s} \right\rvert <2\epsilon
+$$
+由于 $2\epsilon$ 同样为任意小，可以得到
+$$
+A(t)=K\log t.
+$$
+注意到需满足条件 2，因此需要 $K>0$。
+
+现在利用性质 3 将情形扩展至 $n$ 个事件发生有不相同可能性的情况，其概率满足 $p_i=\frac{n_i}{\sum n_i}$，其中 $n_i$ 为整数。我们可以将该情况理解为总共有 $\sum n_i$ 个子可能（possibles），而这些子可能又被打包成 $n$ 个概率为 $p_i=\frac{n_i}{\sum n_i}$ 的可能，那么我们这时候注意到性质 3 可以有
+$$
+K\log \sum n_i = H(p_1,\dots,p_n)+K\sum p_i \log n_i\\
+\;\\
+H=K\left[ \sum p_i\log \sum n_i - \sum p_i\log n_i \right]\\
+\;\\
+H=-K\sum p_i \log \frac{n_i}{\sum n_i}\\
+\;\\
+H=-K\sum p_i \log p_i.
+$$
+
+当概率被表示为分子分母不一定有理数的分数的情况下，利用性质 1 的连续性，可以得到同样的表示。
+
+<div class="container mt-3">
+  <h2>简单的折叠</h2>
+  <p>点击按钮内容会再显示与隐藏之间切换。</p>
+  <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">展开</button>
+  <div id="demo" class="collapse">
+hhhhhhhhh
+
+  </div>
+</div>
+
+
