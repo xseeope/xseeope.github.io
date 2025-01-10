@@ -77,6 +77,8 @@ $$
 $$
 where $\delta_{ij}=1$ if $i=j$ and is zero otherwise.</em>
 
+---
+
 **Proof of Theorem 1** The Growth of the Number of Block of Symbols with a Finite State Condition
 
 令 $N_i(L)$ 为以转移至状态 $i$ 为结尾且长度为 $L$ 的符号块（blocks of symbols）的所有可能的数量。则我们有如下递推关系，
@@ -126,6 +128,8 @@ C=\lim_{L\rightarrow\infty}\frac{\log \sum A_jW^L}{L}=
 =\log W.
 $$
 
+---
+
 ### The Discrete Source of Information
 
 上方的讨论已经展示了，在离散情况下，一个信道中，所传输的所有可能的信号的个数的对数与时间呈线性关系。在本节中将讨论如何使用数学语言刻画信息源 information source，以及要回答这样一个问题：对于一个给定的信息源，每秒可以产生多少 bit 的信息。问题的关键在于如何有效利用信息源的统计特征，使得我们可以通过适当的编码，最大化利用信道的 capacity（reducing the required capacity of the channel）。
@@ -153,7 +157,7 @@ $$
 
 ![Fig5](Shannon48Fig5.png ':size=600')
 
->[!NOTE]考虑这样一个序列，存在 *ac* 三种状态，$p_a(b)=1/3,\;p_a(c)=2/3,\;p_b(a)=p_c(a)=1$，则其一个典型的实例很可能是 *abacacacabacababacac*。显然该序列满足性质 1，但不满足性质 2。对于该序列如果固定采样间隔为 $2k$，则其该序列的采样的统计性质随着会随着起始点是否为 *a* 变化而变化，不存在统计同质性。
+>[!NOTE]考虑这样一个序列，存在 *abc* 三种状态，$p_a(b)=1/3,\;p_a(c)=2/3,\;p_b(a)=p_c(a)=1$，则其一个典型的实例很可能是 *abacacacabacababacac*。显然该序列满足性质 1，但不满足性质 2。对于该序列如果固定采样间隔为 $2k$，则其该序列的采样的统计性质随着会随着起始点是否为 *a* 变化而变化，因此可以说该分布的不同样本存在不同的统计性质，因而也不存在统计同质性。
 
 如果有一类信息源产生的序列不满足性质 1，但可以将其分成多个满足性质 1 的子图（subgraph），并且这些子图都满足性质 2。则定义该一类信息源为由一组纯净部分（pure components）组成的混合信息源（mixed source）。对于混合信息源 $L$ 及其组成成分 $L_1,L_2,L_3,\dots$，可以表示为
 $$
@@ -185,6 +189,8 @@ $$
 H=-K\sum^n_{i=1}p_i\log p_i
 $$
 where $K$ is a positive constant.</em>
+
+---
 
 **Proof of Theorem 2:**
 从所有事件都等可能发生的情形出发，$H(\frac{1}{n},\frac{1}{n},\dots ,\frac{1}{n})=A(n)$，由条件 3 我们可以得到在 $n=s^m$ 的情况下有
@@ -238,14 +244,83 @@ $$
 
 当概率被表示为分子分母不一定有理数的分数的情况下，利用性质 1 的连续性，可以得到同样的表示。
 
-<div class="container mt-3">
-  <h2>简单的折叠</h2>
-  <p>点击按钮内容会再显示与隐藏之间切换。</p>
-  <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">展开</button>
-  <div id="demo" class="collapse">
-hhhhhhhhh
+---
 
-  </div>
-</div>
+由此，我们已经完成了对 Theorem 2 的证明并得到了熵（entropy），我们可以称呼 $H=-\sum p_i\log p_i$ 为概率集合 $p_1,\dots,p_n$ 的熵。当我们写 $H(x)$ 的时候，其含义一般为随机变量 $x$ 的熵，需要注意的是 $x$ 并不是函数的参数（argument），而更像是一个 label。
 
+设想这样一种情形，对于连续出现的两个事件，不妨设第一个事件为 $x$，第二个事件为 $y$，定义 $p(i,j)$ 为事件 $x$ 出现结果 $i$ 的同时，事件 $y$ 出现结果 $i$ 的概率，现可以写出在给定特定的 $x$ 的结果 $i$ 时，事件 $y$ 出现 结果 $j$ 的条件概率为：
+$$
+p_i(j)=\frac{P(i,j)}{\sum_j p(i,j)}.
+$$
+且有联合事件的熵为：
+$$
+H(x,y)=-\sum_{i,j} p(i,j)\log p(i,j)
+$$
+现定义关于 $y$ 条件熵（conditional entropy）
+$$
+H_x(y) = H(x, y)-H(x)
+$$
+直接带入计算可以得到：
+$$
+H_x(y)=-\sum_{i,j}p(i,j)\log p_i(j).
+$$
 
+### The Entropy of an Information Source
+
+考虑一个存在有限个状态的信息源，对于每一个可能的 state $i$，都存在一个概率集合 $p_i(j)$ 描述了在 $i$ 状态下产生（produce）符号（symbol）$j$ 出现的概率，因此对于每一个状态都存在熵 $H_i$。定义一个信息源的熵为其所有状态的熵的加权平均和，其权重为每个状态出现的概率：
+$$
+H=\sum_i P_iH_i=-\sum_{i,j}P_ip_i(j)\log p_i(j).
+$$
+显然上方定义刻画的是一个信息源每产生一个符号（symbol）的这个事件的熵，类似的我们也可以很容易得到一个平均每秒产生 $m$ 个符号的信息源每秒的熵为：
+$$
+H^{\prime}=mH.
+$$
+
+考虑这样一种情形，序列中的符号是独立的，则有 $H=-\sum p_i\log p_i$，其中 $p_i$ 是第 $i$ 个符号出现的概率。现考虑所有长为 $N$ 的序列中一个特殊的情况：第 $i$ 个符号在这个序列的出现次数为 $p_iN$，则该特殊的消息（message）出现的概率为：
+$$
+p=p^{p_1N}_1p^{p_2N}_2\cdots p^{p_nN}_n.
+$$
+亦可以写成
+$$
+\log p \approx N\sum_i p_i\log p_i\\
+\;\\
+\log p \approx -NH\\
+\;\\
+H \approx \frac{\log 1/p}{N}.
+$$
+<em>
+**Theorem 3:** Given any $\epsilon>0, \delta>0$, we can find an $N_0$ such that the sequence of any length $N \geq N_0$ fall into two classes:
+1. A set whose total probability is less than $\epsilon$.
+2. The reminder, all of whose members have probabilities satisfying the inequality
+   $$
+   \left \lvert \frac{\log p^{-1}}{N}-H \right \rvert < \delta.
+   $$
+</em>
+
+>[!NOTE] Theorem 3 说明当 $N$ 非常大的时候，我们可以通过找到最有可能出现的序列的概率来确定这个信息源的熵。
+
+除此之外，还有其他逼近一个信息源的熵的方法。仍然考虑所有长度为 $N$ 的序列，并按照出现概率由大到小排列。定义 $n(q)$ 为：给定一个概率 $q$，我们要从上述序列中根据由大到小的概率所取序列的概率只和达到 $q$ 所需要取的个数。
+
+<em>
+
+**Theorem 4:**
+$$
+\lim_{N\rightarrow\infty}\frac{\log n(q)}{N}=H
+$$
+when $q$ does not equal 0 or 1.
+</em>
+
+我们可以将 $\log n(q)$ 解释为在给定概率的情况下，分辨最有可能抽到的序列的集合所需要的 bit 数。
+
+### Representation of the Encoding and Decoding Operations
+
+在 transmitter 和 receiver 中进行 encoding 和 decoding 操作的部分都可以叫做 transducer 换能器。一个换能器可以被两个函数所描述：
+$$
+y_n=f(x_n, \alpha_n)\\
+\;
+\alpha_{n+1}=g(x_n,\alpha_n)
+$$
+where
+- $x_n$ is the $n^{\text{th}}$ input symbol,
+- $\alpha_n$ is the state of the transducer when the $n^{\text{th}}$ input symbol is introduced,
+- $y_n$ is the output symbol (or sequence of output symbols) produced when $x_n$ is introduced if the state is $\alpha_n$,

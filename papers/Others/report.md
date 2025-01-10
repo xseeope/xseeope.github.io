@@ -87,3 +87,12 @@ $$
 | High | 0.49  | 0.18 | 2.70  |
 | H-L  | 0.81  | 0.12 | 6.61  |
 
+<div class="container mt-3">
+  <h2>简单的折叠</h2>
+  <p>点击按钮内容会再显示与隐藏之间切换。</p>
+  <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">展开</button>
+  <div id="demo" class="collapse">
+hhhhh
+  </div>
+</div>
+
