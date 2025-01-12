@@ -313,6 +313,7 @@ when $q$ does not equal 0 or 1.
 我们可以将 $\log n(q)$ 解释为在给定概率的情况下，分辨最有可能抽到的序列的集合所需要的 bit 数。该定理另一个隐含的信息是当 $N$ 取值非常大的时候，$q$ 的取值与结论无关，都会等于 $H$。
 
 本小节中的另外两个定理同样可以让我们直接利用消息（message）的统计特征去确定 $H$，并且是不依赖于这个信息源状态与状态转移的知识。
+
 <em>**Theorem 5:**
 Let $p(B_i)$ be the probability of a sequence $B_i$ of symbols from the source. Let
 $$
