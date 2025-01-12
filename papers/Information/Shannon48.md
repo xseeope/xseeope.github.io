@@ -310,17 +310,36 @@ $$
 when $q$ does not equal 0 or 1.
 </em>
 
-我们可以将 $\log n(q)$ 解释为在给定概率的情况下，分辨最有可能抽到的序列的集合所需要的 bit 数。
+我们可以将 $\log n(q)$ 解释为在给定概率的情况下，分辨最有可能抽到的序列的集合所需要的 bit 数。该定理另一个隐含的信息是当 $N$ 取值非常大的时候，$q$ 的取值与结论无关，都会等于 $H$。
+
+本小节中的另外两个定理同样可以让我们直接利用消息（message）的统计特征去确定 $H$，并且是不依赖于这个信息源状态与状态转移的知识。
+<em>**Theorem 5:**
+Let $p(B_i)$ be the probability of a sequence $B_i$ of symbols from the source. Let
+$$
+G_N=-\frac{1}{N}\sum_i p(B_i)\log p(B_i)
+$$
+where the sum is over all sequences $B_i$ containing $N$ symbols. The $G_N$ is a monotonic decreasing function of $N$ and
+$$
+\lim _{N\rightarrow\infty} G_N = H.
+$$
+</em>
 
 ### Representation of the Encoding and Decoding Operations
 
 在 transmitter 和 receiver 中进行 encoding 和 decoding 操作的部分都可以叫做 transducer 换能器。一个换能器可以被两个函数所描述：
 $$
 y_n=f(x_n, \alpha_n)\\
-\;
+\;\\
 \alpha_{n+1}=g(x_n,\alpha_n)
 $$
 where
 - $x_n$ is the $n^{\text{th}}$ input symbol,
 - $\alpha_n$ is the state of the transducer when the $n^{\text{th}}$ input symbol is introduced,
 - $y_n$ is the output symbol (or sequence of output symbols) produced when $x_n$ is introduced if the state is $\alpha_n$,
+
+### The Fundamental Theorem for a Noiseless Channel
+<em>**Theorem 9:**
+Let a source have entropy $H$, (bits per symbol) and a channel have capacity $C$ (bits per second). Then it is possible to encode the output of the source in such way as to transmit at the average rate $\frac{C}{H}-\epsilon$ symbols per second over the channel where $\epsilon$ is arbitrary small. It is not possible to transmit at an average rate greater than $\frac{C}{H}$.
+</em>
+
+即对于一个给定的固定产生信息速率为 $H$ 的信息源，和一个固定的信道容量，我们无论采取什么样的编码方式，都无法超越 $\frac{C}{H}$ 的信息传输速率。
