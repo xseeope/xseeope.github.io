@@ -165,13 +165,13 @@ code {
 p {
   font-family: 'Georgia,serif', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
   font-size: 23px !important;
-  line-height: 140% !important;
+  line-height: 150% !important;
 }
 
 li {
   font-family: 'Georgia,serif', 'Times New Roman', 'Arial', 'Source Han Serif SC', 'SimSum-ExtB';
   font-size: 23px !important;
-  line-height: 140% !important;
+  line-height: 150% !important;
 }
 
 .markdown-section ol {
@@ -222,6 +222,10 @@ strong {
 
 .katex {
   font-size: 26px !important;
+  overflow: hidden;
+  display: block;
+  white-space: nowrap;
+  word-wrap: break-word;
 }
 
 .centerwords {
@@ -285,6 +289,3 @@ hr {
   height:  3px;
   background-color: rgb(0, 0, 0);
 }
-
-
-
