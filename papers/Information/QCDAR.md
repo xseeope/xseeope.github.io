@@ -195,3 +195,23 @@ $$
 \tau_c =\inf \left \{ t:W_t \geq c \right \}. \tag{33}
 $$
 
+注意到在我们 AR 模型的设定中，$\mathbb{P}_{t_0}, p_{t_0}(\pmb{y}_t|\pmb{y}_{t_0},\cdots,\pmb{y}_{t-1})$ 均依赖于 $t_0$，因此在每个时间点我们都需要遍历 $p_k(\pmb{y}_t|\pmb{y}_{t_0},\cdots,\pmb{y}_{t-1})$ 来计算 $W_t$，这将带来无法承受的复杂度。作者提出的 *computationally efficient Erdogic CuSum algorithm* 是计算高效且渐进最优的。
+
+从 WADD 的下界 $\frac{\log \gamma}{\mathcal{K}}$ 出发，作者希望找到一个统计量，使其在变化发生前，对 $\mathcal{K}$ 有负向的漂移，在变化发生后有正向的漂移。那么作者找到了这样一个统计量，对于任意的 $t_0$ 都有如上性质的统计量，即相似比例 likelihood ratio 为：
+$$
+L_t = \frac{p_1(\mathbf{y}_1, \cdots, \mathbf{y}_t)}{p_{\infty}(\mathbf{y}_1, \cdots, \mathbf{y}_t)},\tag{34}
+$$
+其中 $L_0=1$。那么由此可以写出 Ergodic CuSum statistic 为：
+$$
+S_t=\max_{0\leq i\leq t}(\log L_t-\log L_i)
+=\max(0,S_{t-1},\log L_t - \log L_{t-1}). \tag{37}
+$$
+并有 Ergodic CuSum algorithm：
+$$
+\tau^{*}_c = \inf\{ t:S_t \geq c \}. \tag{38}
+$$
+现在对于 $L_t$ 这个统计量，可以很轻松使用（16）和（18）式进行迭代更新。
+
+## Data-Driven Setting: Online Gradient Ascent CuSum
+注意到在前面提出的 Ergodic CuSum algorithm 中最关键的 $L_t$ 统计量的迭代更新依赖于（16）和（18）式子，其中显然隐含的信息为 $A,R_{\omega}$ 是已知的，但现实情况下我们很可能是对于 change point 之后的分布是没有 knowledge 的（如网络攻击）。那么在本节中，作者引入了在 2012 年与 2018 年完善的 Online Gradient Ascent 算法去估计出 $A,R_{\omega}$，并插入回上面提出的算法中。其命名就直接为 OGA-CuSum 算法。
+>[!NOTE] 其实这样也不能说对 change point 之后的分布完全没哟 knowledge，至少还是假设了服从 AR 模型的。
