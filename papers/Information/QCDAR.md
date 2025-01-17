@@ -214,4 +214,4 @@ $$
 
 ## Data-Driven Setting: Online Gradient Ascent CuSum
 注意到在前面提出的 Ergodic CuSum algorithm 中最关键的 $L_t$ 统计量的迭代更新依赖于（16）和（18）式子，其中显然隐含的信息为 $A,R_{\omega}$ 是已知的，但现实情况下我们很可能是对于 change point 之后的分布是没有 knowledge 的（如网络攻击）。那么在本节中，作者引入了在 2012 年与 2018 年完善的 Online Gradient Ascent 算法去估计出 $A,R_{\omega}$，并插入回上面提出的算法中。其命名就直接为 OGA-CuSum 算法。
->[!NOTE] 其实这样也不能说对 change point 之后的分布完全没哟 knowledge，至少还是假设了服从 AR 模型的。
+>[!NOTE] 其实这样也不能说对 change point 之后的分布完全没有 knowledge，至少还是假设了服从 AR 模型的。
