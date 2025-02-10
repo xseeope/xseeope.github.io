@@ -1,6 +1,3 @@
-<!-- _sidebar.md -->
-
-
 * Papers
   * [Predicting Returns with Text Data](/papers/SESTM/SESTM.md)
   * [Deep Learning in Asset Pricing](papers/GAN/GAN.md)
@@ -15,13 +12,13 @@
   * [Towards a Deeper Understanding of Global Covariance Pooling in Deep Learning: An Optimization Perspective](/papers/WQL/UnderstandGCP.md)
   <!-- * [1111](/papers/Information/report.md) -->
 * Tools
+  * [Vscode Vim](tools/Vim.md)
   * [PyTorch Autograd](tools/PyTorch_Autograd.md)
   * [PyTorch Data](tools/PyTorch_utils_data.md)
 * Courses
-  * [Time Series Analysis: Midterm-review](courses/时序期中review.md) <!--注意这里是相对路径-->
+  * [Time Series Analysis: Midterm-review](courses/时序期中review.md)
   * [Time Series Analysis: Volatility](courses/FTS-Volatility.md)
   * [Quantitative Investment Analysis: Fama-Macbeth](courses/Fama-Macbeth.md)
-<!-- 3 -->
 * <a href="https://xseeope.github.io" target="_self">Homepage</a>
 
 
