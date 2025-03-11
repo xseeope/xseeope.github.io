@@ -24,8 +24,7 @@ C_{i,j}=\frac{1}{N} \sum_n(h^n_i-\mu_i)(h^n_j-\mu_j)
 $$
 此处 $\mu_i=\frac{1}{N}\sum_nh^n_i$ 为第 i 个 sample 对应的激活值的均值。
 
-那么本文的目的是想要惩罚不同 feature 之间的协方差，那么就要惩罚函数就要将激活值的自身的方差给排除在外，由此得到如下的 DeCov loss 函数。其中 $
-\|\cdot\|_F$ 表示 frobenius 范数。
+那么本文的目的是想要惩罚不同 feature 之间的协方差，那么就要惩罚函数就要将激活值的自身的方差给排除在外，由此得到如下的 DeCov loss 函数。其中 $\|\cdot\|_F$ 表示 frobenius 范数。
 $$
 \mathcal{L}_{\text {DeCov }}=\frac{1}{2}\left(\|C\|_F^2-\|\operatorname{diag}(C)\|_2^2\right)
 $$
