@@ -18,7 +18,7 @@ Srivastava 和 Hinton 2014 年关于 dropout 的工作的 motivation 是想要�
 >Co-adaptation occurs when two or more hidden units rely on one another to perform some function which helps fit training data, thus becoming highly correlated. Co-adaptation is reduced by Dropout using an approximate model averaging technique that sets a randomly selected set of activations to zero at training time.
 ## DeCov Loss
 
-为了形式化表示冗余的（redundant）或者说 co-adapted 的特征，作者引入了关于隐藏层激活值的损失函数（loss on the activations of a chosen hidden layer）。从单层来看：设定 $\mathbf{h}^n \in \mathbb{R}^n$ 为隐藏层输出的激活值。$n \in \{1, \dots , N\}$ 为每次训练的一个 batch 中的一个 size 为 N 的 batch 中的 example 的 index。有次得到任意两个 example i 和 j 的协方差为：
+为了形式化表示冗余的（redundant）或者说 co-adapted 的特征，作者引入了关于隐藏层激活值的损失函数（loss on the activations of a chosen hidden layer）。从单层来看：设定 $\mathbf{h}^n \in \mathbb{R}^n$ 为隐藏层输出的激活值。$n \in \{1, \dots , N\}$ 为每次训练的一个 batch 中的一个 size 为 N 的 batch 中的 example 的 index。由此得到任意两个 example i 和 j 的协方差为：
 $$
 C_{i,j}=\frac{1}{N} \sum_n(h^n_i-\mu_i)(h^n_j-\mu_j)
 $$
