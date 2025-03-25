@@ -1,56 +1,74 @@
-# 祝纪元20250307报告
-## Empirically KAN 与 MLP 的表现差异
-从 Sharpe 来看 MLP 集中在在 1.7 - 2 这个区间， KAN 集中在 2-3 这个区间，下图为这两天跑的 1024 次 trial，未做 permutation 特征选择的分布情况。MLP 分布更为集中，对超参数和随机种子更不敏感。
+# 祝纪元20250325报告
+# Kolmogorov-Arnold Transformer
+ICLR 2025
+- Xingyi Yang, NUS
+- Xinchao Wang, NUS
 
-**MLP**
-![](mlp.png)
+本文主要工作为将 KAN 改进为 GRKAN，其不同的特性为边共享参数（group）和有理数激活函数（rational）。并将 GRKAN 代替 Transformer 中最后的 MLP 层。
 
-**KAN**
-![](kan.png)
+## Introduction
+刘子鸣等人提出的原始版本的 KAN 存在如下事实上的短板：
 
-## Key Points on KAN 2.0 Part 3: Science to KANs
-### 3.1 Adding important features to KANs
-在网络中加入先验。如原始回归任务为找到 $f$ 有 $y = f(x)$，增加辅助变量 $a=a(x)$，则新任务为找到 $f$ 有 $y = f(x, a)$。注意到此处的 $a(x)$ 的形式已知。（跟特征工程有什么区别？）
+- *Base function.* KAN 中使用 B-spline 函数需要递归计算，与现代 GPU 的并行计算架构并不兼容。
+- *Parameter and Computation Inefficiency.* 由于 KAN 中的每条边都被设计成可学习的。
+- *Weight initialization* KAN 中初始化权重的操作与 MLP 类似，但是却对在事实上对收敛产生了负面影响，并且会导致不稳定性。
 
-### 3.2 Building modular structures to KANs
-除了 KAN 的作者把每一个模块称呼为函数之外，没看出来跟 MLP 的模块化有啥区别。
+针对以上三个事实，本文提出了三个解决方案：
 
-### 3.3 Compiling symbolic formulas to KANs
-将用符号表示的方程编译为 KAN，同时可以使用 `expand_width` 和 `expand_depth` 方法增加编译后的网络的弹性。
+- *Rational activation* 使用 CUDA 实现了有理函数作为基函数的激活函数。
+- *Group KAN* 将边分为多个 group，同一 group 之间共享相同的基函数和参数。
+- *Variance-preserving initialization.* 使用能够保证不同 layer 之间方差一致性的初始化方法。
 
-## Part 4: KANs to Science
-### 4.1 Identifying important features from KANs
-在 KAN 1.0 中定义激活值的标准差作为节点和边的 importance 存在缺陷。即可能存在这样一种情况，一个有大标准差的节点的输出值输入进的是一个恒为 0 的函数，显然此时使用标准差作为重要性的度量有失偏颇。
 
-对其进行修正有：
+## Why original KAN fails to scale?
+
+#### B-spline is not GPU friendly.
+略。
+
+#### Parameter and Computation Inefficiency.
+参数量：KAN 所需的参数量 $O(G+K)$ 倍于 MLP，其中 $G$ 为 grid 的数量，$K$ 为阶数。
+
+计算量：KAN 所需的计算量 $O(GK)$ 倍于 MLP。
+
+#### Weights are not Properly Initialized
+综合 LeCun，Bengio，Kaiming He 等人的观点，初始化模型参数的一个基本原则是保证 *variance-preserving*，也就是说，不论在前向还是后向过程中，信号的方差在不同层之间的转播应该保持不变。该基本原则目的也是为了保证激活值和参数在不同 layer 之间传递的稳定性。
+
+原始的 KAN 并不满足该基本准则。初始的 B-spline 系数 $c_i$ 从 $\mathcal{N}(0, \sigma^2)$ 分布中采样，其中 $\sigma = 0.1$，而 base function 和 B-spline 函数的权重初始化则依据 Xavier 初始化，分别为 $w_s=1$ 和 $w_b \sim U \left [-\frac{6}{\sqrt{d_{in}+d_{out}}}, \frac{6}{\sqrt{d_{in}+d_{out}}} \right ]$，那么由此可以得到
 $$
-B_{l-1, i, j}=A_{l, j} \frac{E_{l, j}}{N_{l+1, j}}, \quad A_{l-1, i}=\sum_{j=0}^{n_l} B_{l-1, i, j}, \quad l=L, L-1, \cdots, 1 .
+{Var}[\phi(x)]={Var}\left[w_b \operatorname{silu} (x)\right]+{Var}\left[w_s \operatorname{spline}(x)\right]=3 \mathbb{E}\left[\operatorname{silu}^2(x)\right]+\mathbb{E}\left[\operatorname{spline}^2(x)\right]
 $$
-其中:
-- $A$ 为节点 score
-- $B$ 为边 score
-- $E$ 为边标准差
-- $N$ 为节点标准差
+>[!attention] 要推导出上式，隐含假设为 $d_{in}+d_{out}=4$.
 
-并设定最后一层（即 $L$ 层）的所有节点 score 为 1，由此便可由上式递推得到各节点与边的 score。
+现假设输出 $x\sim \mathcal{N}(0,\sigma_x^2)$，且 B-spline 的阶数 $k=0$，则有：
+$$
+\mathbb{E}[\text{spline}^2(x)]=\sum_i c^2_i Var[B_i(x)]=\sigma^2\sum_i Var[B_i(x)]=\sigma^2=0.01
+$$
+对于基函数也就是 SiLU，其方差可以由数值方法得到为 $\mathbb{E}(\text{silu}^2(x))\approx 0.355\sigma^2_x$. 那么结合基函数和样条函数的方差可以得到 $Var[\phi(x)]\approx 0.01+1.064\sigma_x^2 \neq Var[x]$
 
-### 4.2 Identifying modular structures from KANs
+## Kolmogorov-Arnold Transformer
+本文工作只是把 vision transformer 中最后的 MLP 模块更换为 GRKAN 模块。
+#### Rational Base Functions
+将边的连接从 B-spline 函数更换为如下的多项式基函数：
+$$
+\phi(x)=w F(x)=w \frac{P(x)}{Q(x)}=w \frac{a_0+a_1 x+\cdots+a_m x^m}{b_0+b_1 x+\cdots+b_n x^n}
+$$
+其中 $a_m$，$b_n$，$w$ 是要通过反向传播学习的参数。在具体实现细节上，使用的是来自 2020 ICLR *End-toend learning of flexible activation functions in deep networks* 中的 Safe Pade Activation Unit (PAU)：
+$$
+F(x)=\frac{a_0+a_1 x+\cdots+a_m x^m}{1+ | b_1 x+\cdots+b_n x^n |}.
+$$
 
-#### 4.2.1 Anatomical modularity
-通过画一个更好的图，可以让人的肉眼（原文就是 visually）看出网络中模块化的成分。（reveals the modular struture）。注意到这是个对 MLP 和 KAN 都适用的方法。有意思的是作者刘子鸣 et al. 在文中举例说 KAN 画出来的图更简单，实际上 KAN
- 的激活函数中大量 learnable parameters 没有被画出来。
-![](Figure7_a.png)
+除了 GPU 友好之外，有两篇数学期刊上的成果（American Mathematical Soc. 1935 和 Journal of Mathematical Analysis and Applications 1961）表明在面对奇异和陡峭的函数时，有理基函数比多项式函数有更好的拟合效率和准确性。
 
-#### 4.2.2 Functional modularity
-用数学语言形式化定义了 3.1 和 3.2 中的内容。
+#### Group KAN
+将两层之间所有的链接分为 $g$ 个 group，相同 group 中的链接参数相同。也就是说两层之前原来需要学习 $d_{in}\times d_{out}$ 个激活函数，现在只需要学习 $g$ 个。
 
-### 4.3 Identifying symbolic formulas from KANs
+#### Variance-Preserving Initialization
+在这一部分工作中，作者将 Kaiming 初始化的思想引入到 KAN 中，即 variance-preserving，输出层方差等于输入层方差：
+$$
+Var[y]=d_{in}Var[w]\mathbb{E}[F(x)^2]=Var[x]
+$$
+显然，$Var[y]$ 由两个部分决定，即 $w$ 和 $F(x)$ 的参数 $a$，$b$。具体来看，本工作先初始化 $a$，$b$ 使 $F(x)$ 拟合传统上的 ReLU、SiLU 等激活函数，此时得到 $a$，$b$ 后计算增益量（gain）$\alpha = \frac{\mathbb{E}[F(x)^2]}{Var[x]}$，并从分布 $\mathcal{N}(0, \frac{\alpha}{d_{in}})$ 初始化参数 $w$.
 
-**Trick A: discover and leverage modular structures** 
-先使用 4.2 中的画图，肉眼瞪出可能存在的模块化结构，然后再以此作为先验知识设计个新的模块化网络并训练。
+>[!NOTE]上方的推导包含的假设有：模型存在 Layernorm 即 $x\sim \mathcal{N}(0,1)$，$x$ 的分量即 $x_i$ 之间互相独立，$x_i$ 服从均匀分布。
 
-**Trick B: Sparse initialization**
-利用 symbolic formula 对应的 KAN 结构通常是稀疏的，所以初始化 KAN 的时候直接稀疏初始化。
-
-**Trick C: Hypothesis Testing**
-用于测试 3.1 中的先验 $a(x)$ （我愿称之为特征工程）选的对不对，方法（这算方法吗？）就是都测试一遍，看哪个 loss 更小。
+除此之外，作者还使用预训练的 ViT 模型初始化。
