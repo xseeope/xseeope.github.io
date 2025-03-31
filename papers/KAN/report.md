@@ -1,29 +1,15 @@
 # 祝纪元20250325报告
-# Kolmogorov-Arnold Transformer
+## Kolmogorov-Arnold Transformer
 ICLR 2025
 - Xingyi Yang, NUS
 - Xinchao Wang, NUS
 
 本文主要工作为将 KAN 改进为 GRKAN，其不同的特性为边共享参数（group）和有理数激活函数（rational）。并将 GRKAN 代替 Transformer 中最后的 MLP 层。
 
-## Introduction
-刘子鸣等人提出的原始版本的 KAN 存在如下事实上的短板：
-
-- *Base function.* KAN 中使用 B-spline 函数需要递归计算，与现代 GPU 的并行计算架构并不兼容。
-- *Parameter and Computation Inefficiency.* 由于 KAN 中的每条边都被设计成可学习的。
-- *Weight initialization* KAN 中初始化权重的操作与 MLP 类似，但是却对在事实上对收敛产生了负面影响，并且会导致不稳定性。
-
-针对以上三个事实，本文提出了三个解决方案：
-
-- *Rational activation* 使用 CUDA 实现了有理函数作为基函数的激活函数。
-- *Group KAN* 将边分为多个 group，同一 group 之间共享相同的基函数和参数。
-- *Variance-preserving initialization.* 使用能够保证不同 layer 之间方差一致性的初始化方法。
-
-
 ## Why original KAN fails to scale?
 
 #### B-spline is not GPU friendly.
-略。
+KAN 中使用 B-spline 函数需要递归计算，与现代 GPU 的并行计算架构并不兼容。
 
 #### Parameter and Computation Inefficiency.
 参数量：KAN 所需的参数量 $O(G+K)$ 倍于 MLP，其中 $G$ 为 grid 的数量，$K$ 为阶数。
@@ -72,3 +58,7 @@ $$
 >[!NOTE]上方的推导包含的假设有：模型存在 Layernorm 即 $x\sim \mathcal{N}(0,1)$，$x$ 的分量即 $x_i$ 之间互相独立，$x_i$ 服从均匀分布。
 
 除此之外，作者还使用预训练的 ViT 模型初始化。
+
+## 实验部分
+我自己在 mnist 数据集上跑不知道为什么不论是时间还是准确率都不如 GELU。。。
+![](report.png)

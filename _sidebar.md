@@ -11,6 +11,7 @@
   * [DropCov: A Simple yet Effective Method for Improving Deep Architectures](/papers/WQL/DropCov.md)
   * [Towards a Deeper Understanding of Global Covariance Pooling in Deep Learning: An Optimization Perspective](/papers/WQL/UnderstandGCP.md)
   * [Kolmogorov-Arnold Transformer](/papers/KAN/KAT.md)
+  * [Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification](/papers/KAN/HeInit.md)
   <!-- * [1111](/papers/KAN/report.md) -->
 * Tools
   * [Vscode Vim](tools/Vim.md)
