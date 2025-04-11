@@ -7,7 +7,11 @@ ICCV 2015, Microsoft Research
 
 
 ## Introduction
-标题中的Rectifiers 主要指的是 ReLU 等激活函数及其变体。本工作主要包含两部分：提出 Parametric ReLU，以及一个新的初始化方法。
+标题中的 Rectifiers 主要指的是 ReLU 等激活函数及其变体。本工作主要包含两部分：提出 Parametric ReLU，以及一个新的初始化方法。
+
+与 sigmoid 类激活函数相比，Rectified Linear Unit（ReLU）加速了深度网络的收敛，并且可以得到更好的 solution。
+
+本文提出的 *Parametric Rectified Linear Unit* （PReLU）
 
 ## Parametric ReLU
 PReLU：
