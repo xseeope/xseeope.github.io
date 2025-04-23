@@ -12,7 +12,8 @@
   * [Towards a Deeper Understanding of Global Covariance Pooling in Deep Learning: An Optimization Perspective](/papers/WQL/UnderstandGCP.md)
   * [Kolmogorov-Arnold Transformer](/papers/KAN/KAT.md)
   * [Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification](/papers/KAN/HeInit.md)
-  <!-- * [1111](/papers/KAN/report.md) -->
+  * [A Bidirectional Differential Evolution-Based Unknown Cyberattack Detection System](/papers/EVO/BDE_IDS.md)
+  <!-- * [report](/papers/KAN/report.md) -->
 * Tools
   * [Vscode Vim](tools/Vim.md)
   * [PyTorch Autograd](tools/PyTorch_Autograd.md)

@@ -1,64 +1,99 @@
-# 祝纪元20250325报告
-## Kolmogorov-Arnold Transformer
-ICLR 2025
-- Xingyi Yang, NUS
-- Xinchao Wang, NUS
+# 祝纪元20250411报告
+# Mini Survey on Prune Methods
 
-本文主要工作为将 KAN 改进为 GRKAN，其不同的特性为边共享参数（group）和有理数激活函数（rational）。并将 GRKAN 代替 Transformer 中最后的 MLP 层。
+## The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks
+- MIT CSAIL
+- ICLR 2019
+- Cite: 4000+
 
-## Why original KAN fails to scale?
+#### Hypothesis
+一个训练好的网络中存在一个子网络（subnetworks），其能力不弱于完整网络。
 
-#### B-spline is not GPU friendly.
-KAN 中使用 B-spline 函数需要递归计算，与现代 GPU 的并行计算架构并不兼容。
+#### Identifying winner subnetworks
+1. 随机初始化参数 $\theta_0$，
+2. 迭代 j 次至 $\theta_j$，
+3. 根据权重的绝对值，取每一层的 low-k 个权重剪枝，
+4. 修剪后的模型重新初始化参数至 $\theta_0$，
+5. 重新训练并重复上述步骤
 
-#### Parameter and Computation Inefficiency.
-参数量：KAN 所需的参数量 $O(G+K)$ 倍于 MLP，其中 $G$ 为 grid 的数量，$K$ 为阶数。
+#### Findings
+必须要求修剪后参数初始化保持一致，如果重新随机初始化，模型表现将偏离原始模型。
 
-计算量：KAN 所需的计算量 $O(GK)$ 倍于 MLP。
+## A Simple and Effective Pruning Approach for Large Language Models
+- CMU, Meta, Bosch
+- ICLR 2024
+- Cite: 500+
 
-#### Weights are not Properly Initialized
-综合 LeCun，Bengio，Kaiming He 等人的观点，初始化模型参数的一个基本原则是保证 *variance-preserving*，也就是说，不论在前向还是后向过程中，信号的方差在不同层之间的转播应该保持不变。该基本原则目的也是为了保证激活值和参数在不同 layer 之间传递的稳定性。
+#### Contribution
+- 传统方法根据权重绝对值大小进行剪枝，然而较小的权重不一定对预测的影响小，这是由于输出等于权重乘以输入值，因此本文根据此指标构建对权重参数新的剪枝依据。
+- 在稀疏操作的分组上，本文将输出的 tensor 的每一个 item 所对应的参数分为一组。如果系数比率设定为 0.5，则按照计算出的 score 大小将该组中一半的参数设置为 0。
 
-原始的 KAN 并不满足该基本准则。初始的 B-spline 系数 $c_i$ 从 $\mathcal{N}(0, \sigma^2)$ 分布中采样，其中 $\sigma = 0.1$，而 base function 和 B-spline 函数的权重初始化则依据 Xavier 初始化，分别为 $w_s=1$ 和 $w_b \sim U \left [-\frac{6}{\sqrt{d_{in}+d_{out}}}, \frac{6}{\sqrt{d_{in}+d_{out}}} \right ]$，那么由此可以得到
+计算 score：
 $$
-{Var}[\phi(x)]={Var}\left[w_b \operatorname{silu} (x)\right]+{Var}\left[w_s \operatorname{spline}(x)\right]=3 \mathbb{E}\left[\operatorname{silu}^2(x)\right]+\mathbb{E}\left[\operatorname{spline}^2(x)\right]
+\mathbf{S}_{ij}=| \mathbf{W}_{ij} | \cdot \left \| \mathbf{X}_j \right \|_2
 $$
->[!attention] 要推导出上式，隐含假设为 $d_{in}+d_{out}=4$.
+其中 $\mathbf{X}$ 为输入。
 
-现假设输出 $x\sim \mathcal{N}(0,\sigma_x^2)$，且 B-spline 的阶数 $k=0$，则有：
-$$
-\mathbb{E}[\text{spline}^2(x)]=\sum_i c^2_i Var[B_i(x)]=\sigma^2\sum_i Var[B_i(x)]=\sigma^2=0.01
-$$
-对于基函数也就是 SiLU，其方差可以由数值方法得到为 $\mathbb{E}(\text{silu}^2(x))\approx 0.355\sigma^2_x$. 那么结合基函数和样条函数的方差可以得到 $Var[\phi(x)]\approx 0.01+1.064\sigma_x^2 \neq Var[x]$
 
-## Kolmogorov-Arnold Transformer
-本文工作只是把 vision transformer 中最后的 MLP 模块更换为 GRKAN 模块。
-#### Rational Base Functions
-将边的连接从 B-spline 函数更换为如下的多项式基函数：
+![Wanda](Wanda.png)
+
+
+ # Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification
+ICCV 2015, Microsoft Research
+- Kaiming He
+- Xiangyu Zhang
+- Shaoqing Ren
+- Jian Sun
+
+
+## Introduction
+标题中的 Rectifiers 主要指的是 ReLU 等激活函数及其变体。本工作主要包含两部分：提出 Parametric ReLU，以及一个新的初始化方法。
+
+与 sigmoid 类激活函数相比，Rectified Linear Unit（ReLU）加速了深度网络的收敛，并且可以得到更好的 solution。
+
+本文提出的 *Parametric Rectified Linear Unit* （PReLU）可以自适应学习激活函数的参数，在只需要增加极小一部分参数量的情况下提高模型准确率。同时本文新提出的初始化方法可以加速非常深的网络（30 层）的收敛速度。
+
+## Parametric ReLU
+PReLU：
 $$
-\phi(x)=w F(x)=w \frac{P(x)}{Q(x)}=w \frac{a_0+a_1 x+\cdots+a_m x^m}{b_0+b_1 x+\cdots+b_n x^n}
+f\left(y_i\right)= \begin{cases}y_i, & \text { if } y_i>0 \\ a_i y_i, & \text { if } y_i \leq 0\end{cases}
 $$
-其中 $a_m$，$b_n$，$w$ 是要通过反向传播学习的参数。在具体实现细节上，使用的是来自 2020 ICLR *End-toend learning of flexible activation functions in deep networks* 中的 Safe Pade Activation Unit (PAU)：
+其中 $a_i$ 是可学习的参数，如果 $a_i=0$，则其实际上为传统的 ReLU，如果 $a_i$ 是一个固定的且值比较小的数，则其实际上为 LeakyReLU。上式实际上也可以写为：
 $$
-F(x)=\frac{a_0+a_1 x+\cdots+a_m x^m}{1+ | b_1 x+\cdots+b_n x^n |}.
+f(y_i)=\text{max}(0, y_i)+ a_i \text{min}(0,y_i)
 $$
 
-除了 GPU 友好之外，有两篇数学期刊上的成果（American Mathematical Soc. 1935 和 Journal of Mathematical Analysis and Applications 1961）表明在面对奇异和陡峭的函数时，有理基函数比多项式函数有更好的拟合效率和准确性。
+![Fig1](pics/HeInitFig1.png)
 
-#### Group KAN
-将两层之间所有的链接分为 $g$ 个 group，相同 group 中的链接参数相同。也就是说两层之前原来需要学习 $d_{in}\times d_{out}$ 个激活函数，现在只需要学习 $g$ 个。
+使用 LeakyReLU 的目的为避免梯度为 0，而本文将 LeakyReLU 的小于 0 的部分的参数设置为可学习的参数，希望如此可以在端到端的训练中得到（每个任务专门）对应的激活。
+> We hope for end-to-end training that will lead to more specialized activations.
 
-#### Variance-Preserving Initialization
-在这一部分工作中，作者将 Kaiming 初始化的思想引入到 KAN 中，即 variance-preserving，输出层方差等于输入层方差：
+## Initialization of Filter Weights for Rectifiers
+本部分提出的初始化方法的中心思想在于 layer 输出的方差应保持不变。
+> A proper initialization method should avoid or magnifying the magnitudes of input signals exponentially.
+
+对于一个卷积层，其在激活前的响应为：
 $$
-Var[y]=d_{in}Var[w]\mathbb{E}[F(x)^2]=Var[x]
+\mathbf{y}_l = W_l\mathbf{x}_l+\mathbf{b}_l.
 $$
-显然，$Var[y]$ 由两个部分决定，即 $w$ 和 $F(x)$ 的参数 $a$，$b$。具体来看，本工作先初始化 $a$，$b$ 使 $F(x)$ 拟合传统上的 ReLU、SiLU 等激活函数，此时得到 $a$，$b$ 后计算增益量（gain）$\alpha = \frac{\mathbb{E}[F(x)^2]}{Var[x]}$，并从分布 $\mathcal{N}(0, \frac{\alpha}{d_{in}})$ 初始化参数 $w$.
-
->[!NOTE]上方的推导包含的假设有：模型存在 Layernorm 即 $x\sim \mathcal{N}(0,1)$，$x$ 的分量即 $x_i$ 之间互相独立，$x_i$ 服从均匀分布。
-
-除此之外，作者还使用预训练的 ViT 模型初始化。
-
-## 实验部分
-我自己在 mnist 数据集上跑不知道为什么不论是时间还是准确率都不如 GELU。。。
-![](report.png)
+其中 $l$ 为 layer 的 index。$\mathbf{x}_l=f(\mathbf{y}_l)$，$f$ 为激活函数。假设 $\mathbf{x}_l$ 中的元素是互相独立的（mutually independent），则有：
+$$
+Var[y_l]=n_lVar[w_lx_l],
+$$
+其中 $n_l$ 为连接的个数。如令 $w_l$ 的均值为 0 则可以有：
+$$
+Var[y_l]=n_lVar[w_l]E[x_l]^2
+$$
+注意到由于使用的是 ReLU 激活函数，所以可以有 $E[x_l]^2=\frac{1}{2}Var[y_{l-1}]$，由此我们可以得到：
+$$
+Var[y_l]=\frac{1}{2}n_lVar[w_l]Var[y_{l-1}].
+$$
+先将两层之间的关系递推到所有层则有：
+$$
+\operatorname{Var}\left[y_L\right]=\operatorname{Var}\left[y_1\right]\left(\prod_{l=2}^L \frac{1}{2} n_l \operatorname{Var}\left[w_l\right]\right) .
+$$
+那么为满足方差不变需要有：
+$$
+\frac{1}{2} n_l \operatorname{Var}\left[w_l\right]=1,\;\; \forall l.
+$$
+那么现在可以得到初始化方法 $w\sim \mathcal{N}(0, \sqrt{2/n_l})$，且网络 bias 为 0。
