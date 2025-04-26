@@ -64,7 +64,13 @@
         body {
           line-height: 2; /* 设置全局行距 */
         }
-      </style>     
+      </style>
+      <!-- <style>
+        section.cover {
+          background-image: url(BCS2.jpg) !important;
+          background-size: cover !important;
+        }
+      </style> -->
 </head>
 
 <body>
@@ -114,8 +120,7 @@
                 accent: '#003f43',
                 textColor: '#26221f',
                 background:'#ffffff',
-                coverBackground: 'url(/_media/BCS2.jpg)',
-                coverBackground : 'linear-gradient(to right top, hsl(181 37% 71% / 1) 0%,#6dd5fa33, #003F4C)',
+                coverBackground: 'url(' + window.location.origin + '/BCS2.jpg)',
                 },
                 dark: {
                 accent: '#2bb7b3',
@@ -145,6 +150,11 @@
                 }
             },
         }
+
+        // console.log(window.location.origin)
+        // console.log(window.location.href)
+        // console.log('url(' + window.location.origin + '/BCS2.jpg)')
+        // console.log('url(./BCS2.jpg)')
 
 </script>
 
